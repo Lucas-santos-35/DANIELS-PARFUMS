@@ -1,1 +1,1659 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniels Parfums Selection • Luxury Inventory & Marketplaces</title>
+    
+    <!-- PWA Configs -->
+    <meta name="theme-color" content="#0a0a0c">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons for Luxury Iconography -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Chart.js for Premium Dashboard Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            50: '#fbf8eb',
+                            100: '#f5edd1',
+                            200: '#ebdaa3',
+                            300: '#dec26e',
+                            400: '#cfa63c',
+                            500: '#D4AF37', // Gold signature
+                            600: '#b08a27',
+                            700: '#8c681e',
+                            800: '#5c4314',
+                            900: '#2e2009',
+                        },
+                        luxury: {
+                            bg: '#070709',
+                            card: '#121216',
+                            cardLight: '#1b1b22',
+                            input: '#18181f',
+                            border: 'rgba(212, 175, 55, 0.15)',
+                            borderHover: 'rgba(212, 175, 55, 0.4)',
+                            textMuted: '#9ca3af'
+                        }
+                    },
+                    boxShadow: {
+                        'gold-glow': '0 0 20px rgba(212, 175, 55, 0.15)',
+                        'gold-glow-lg': '0 0 35px rgba(212, 175, 55, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #070709 0%, #111115 50%, #0a0a0d 100%);
+            scrollbar-width: thin;
+            scrollbar-color: #D4AF37 #121216;
+        }
+        
+        /* Custom scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0d11;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b08a27;
+        }
+
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(18, 18, 22, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        /* Smooth tab transition */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        /* Interactive pulse effect for notifications */
+        @keyframes pulse-gold {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; transform: scale(1.03); }
+        }
+        .animate-pulse-gold {
+            animation: pulse-gold 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="text-gray-100 min-h-screen flex flex-col selection:bg-gold-500 selection:text-black">
+
+    <!-- Top Premium Bar -->
+    <header class="border-b border-luxury-border bg-luxury-bg/90 sticky top-0 z-40 backdrop-blur-md px-4 sm:px-8 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <!-- Luxury Branding -->
+            <div class="flex items-center gap-4">
+                <div class="h-12 w-12 rounded-full border border-gold-500/30 flex items-center justify-center bg-gold-950/20 shadow-gold-glow">
+                    <i class="ph ph-crown text-gold-500 text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-cinzel text-xl sm:text-2xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-gold-200">
+                        DANIELS PARFUMS
+                    </h1>
+                    <p class="text-xs tracking-[0.3em] uppercase text-luxury-textMuted flex items-center gap-1">
+                        <span>Luxury Fragrances Management</span>
+                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-500"></span>
+                        <span class="text-gold-400 font-semibold">Selection</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Global Actions & System Badges -->
+            <div class="flex flex-wrap items-center gap-3">
+                <span class="text-xs bg-gold-950/40 border border-gold-500/20 text-gold-400 font-semibold uppercase px-3 py-1.5 rounded-full tracking-wider flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                    Hospedado & Ativo
+                </span>
+                
+                <button onclick="document.getElementById('importFile').click()" class="bg-transparent hover:bg-white/5 border border-white/10 hover:border-gold-500/40 text-gray-300 text-xs font-semibold px-3 py-2 rounded-lg transition-all duration-300 flex items-center gap-2">
+                    <i class="ph ph-upload-simple"></i> Importar Backup
+                </button>
+                <input type="file" id="importFile" accept=".json" class="hidden" onchange="importarDados(event)">
+
+                <button onclick="exportarDados()" class="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-black text-xs font-bold px-4 py-2 rounded-lg transition-all duration-300 shadow-gold-glow hover:shadow-gold-glow-lg hover:-translate-y-0.5 flex items-center gap-2">
+                    <i class="ph ph-download-simple"></i> Exportar Backup
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs / Quick stats summary -->
+    <nav class="bg-luxury-bg/40 border-b border-luxury-border/50 py-3 px-4 sm:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex bg-luxury-card border border-white/5 p-1 rounded-xl w-full sm:w-auto overflow-x-auto">
+                <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 bg-gold-500 text-black shadow-gold-glow">
+                    <i class="ph ph-presentation-chart"></i> Painel Geral
+                </button>
+                <button onclick="switchTab('calculator')" id="tab-calculator" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 text-gray-400 hover:text-white">
+                    <i class="ph ph-calculator"></i> Precificar & Criar
+                </button>
+                <button onclick="switchTab('inventory')" id="tab-inventory" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 text-gray-400 hover:text-white">
+                    <i class="ph ph-package"></i> Estoque Real
+                </button>
+            </div>
+            
+            <!-- Quick Alert for low inventory -->
+            <div id="low-stock-alert" class="hidden text-xs bg-amber-500/10 border border-amber-500/30 text-amber-400 px-3 py-1.5 rounded-lg items-center gap-2 animate-pulse-gold">
+                <i class="ph ph-warning-circle text-sm"></i>
+                <span>Aviso: Há produtos com estoque crítico (≤ 2 frascos)!</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Workspace Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-8 py-6">
+
+        <!-- SYSTEM STATISTICS SECTION -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Estimated Revenue KPI -->
+            <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group transition-all duration-300 hover:border-gold-500/30">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 rounded-full blur-3xl group-hover:bg-gold-500/10 transition-all duration-500"></div>
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-xs uppercase tracking-widest text-luxury-textMuted font-medium">Faturamento Estimado</span>
+                    <div class="p-2.5 rounded-xl bg-gold-500/10 text-gold-400 border border-gold-500/20">
+                        <i class="ph ph-currency-dollar text-xl"></i>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span id="fat" class="font-cinzel text-2xl sm:text-3xl font-bold text-gold-400">R$ 0,00</span>
+                </div>
+                <p class="text-[10px] text-luxury-textMuted mt-2 flex items-center gap-1">
+                    <i class="ph ph-trend-up text-emerald-500"></i> Total projetado no valor de venda final
+                </p>
+            </div>
+
+            <!-- Net Profit KPI -->
+            <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group transition-all duration-300 hover:border-gold-500/30">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-all duration-500"></div>
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-xs uppercase tracking-widest text-luxury-textMuted font-medium">Lucro Líquido Projetado</span>
+                    <div class="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <i class="ph ph-chart-line-up text-xl"></i>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span id="lucroTotal" class="font-cinzel text-2xl sm:text-3xl font-bold text-emerald-400">R$ 0,00</span>
+                </div>
+                <p class="text-[10px] text-luxury-textMuted mt-2 flex items-center gap-1">
+                    <i class="ph ph-shield-check text-gold-500"></i> Descontados custos, taxas e tarifas de marketplace
+                </p>
+            </div>
+
+            <!-- Total Stock KPI -->
+            <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group transition-all duration-300 hover:border-gold-500/30">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-sky-500/5 rounded-full blur-3xl group-hover:bg-sky-500/10 transition-all duration-500"></div>
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-xs uppercase tracking-widest text-luxury-textMuted font-medium">Unidades em Estoque</span>
+                    <div class="p-2.5 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                        <i class="ph ph-package text-xl"></i>
+                    </div>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span id="estoqueTotal" class="font-cinzel text-2xl sm:text-3xl font-bold text-white">0</span>
+                    <span class="text-xs text-luxury-textMuted">frascos</span>
+                </div>
+                <p class="text-[10px] text-luxury-textMuted mt-2 flex items-center gap-1">
+                    <i class="ph ph-check-circle text-emerald-500"></i> Total consolidado no estoque físico
+                </p>
+            </div>
+        </section>
+
+        <!-- TAB 1: DASHBOARD & ANALYTICS -->
+        <div id="tab-content-dashboard" class="tab-content active space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Quick Navigation & Empty State Welcomes -->
+                <div class="lg:col-span-1 glass-panel rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-cinzel text-lg font-bold text-gold-400 mb-2 border-b border-gold-500/10 pb-2">Seletor de Ações</h3>
+                        <p class="text-xs text-luxury-textMuted mb-6">Controle rapidamente o ecossistema financeiro e logístico da sua grife de importados.</p>
+                        
+                        <div class="space-y-3">
+                            <button onclick="switchTab('calculator')" class="w-full text-left p-3.5 rounded-xl bg-luxury-card hover:bg-gold-500/5 border border-white/5 hover:border-gold-500/20 text-xs font-semibold flex items-center justify-between transition-all duration-300">
+                                <span class="flex items-center gap-3">
+                                    <i class="ph ph-plus-circle text-gold-500 text-lg"></i>
+                                    Precificar Novo Perfume
+                                </span>
+                                <i class="ph ph-caret-right text-luxury-textMuted"></i>
+                            </button>
+                            <button onclick="switchTab('inventory')" class="w-full text-left p-3.5 rounded-xl bg-luxury-card hover:bg-gold-500/5 border border-white/5 hover:border-gold-500/20 text-xs font-semibold flex items-center justify-between transition-all duration-300">
+                                <span class="flex items-center gap-3">
+                                    <i class="ph ph-clipboard-text text-gold-500 text-lg"></i>
+                                    Visualizar Estoque Real
+                                </span>
+                                <i class="ph ph-caret-right text-luxury-textMuted"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- System Reset & Sample Installer -->
+                    <div class="mt-8 pt-4 border-t border-white/5">
+                        <div id="demo-db-box" class="hidden">
+                            <p class="text-xs text-amber-400/80 mb-3 font-medium flex items-center gap-1.5">
+                                <i class="ph ph-info"></i> Sem dados cadastrados?
+                            </p>
+                            <button onclick="carregarDadosAmostra()" class="w-full bg-gold-950/30 hover:bg-gold-950/50 text-gold-400 border border-gold-500/30 hover:border-gold-500 text-xs font-bold py-2 px-3 rounded-lg transition-all duration-300 flex items-center justify-center gap-1.5">
+                                <i class="ph ph-magic-wand"></i> Carregar Amostras Luxo
+                            </button>
+                        </div>
+                        <div id="reset-db-box" class="block">
+                            <button onclick="confirmarExclusaoGeral()" class="w-full bg-red-950/20 hover:bg-red-950/40 text-red-400/80 hover:text-red-400 border border-red-500/20 hover:border-red-500/40 text-[11px] font-semibold py-2 px-3 rounded-lg transition-all duration-300 flex items-center justify-center gap-1.5">
+                                <i class="ph ph-trash"></i> Resetar Todo Sistema
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Distribution Chart (Bar Chart) -->
+                <div class="lg:col-span-2 glass-panel rounded-2xl p-6">
+                    <div class="flex justify-between items-center mb-4 border-b border-gold-500/10 pb-2">
+                        <h3 class="font-cinzel text-lg font-bold text-gold-400">Performance Financeira</h3>
+                        <span class="text-[10px] tracking-wider uppercase text-luxury-textMuted bg-white/5 px-2 py-1 rounded">Comparativo por Fragrância</span>
+                    </div>
+                    <div class="h-64 relative">
+                        <canvas id="financeChart"></canvas>
+                        <div id="chart-placeholder" class="absolute inset-0 flex flex-col items-center justify-center bg-luxury-bg/90 text-luxury-textMuted text-xs hidden">
+                            <i class="ph ph-chart-bar text-3xl mb-2 text-gold-500/50"></i>
+                            <span>Nenhum dado cadastrado para exibir nos gráficos.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Quick View Top Products Cards -->
+            <div class="glass-panel rounded-2xl p-6">
+                <h3 class="font-cinzel text-lg font-bold text-gold-400 mb-4 border-b border-gold-500/10 pb-2 flex items-center gap-2">
+                    <i class="ph ph-star text-gold-500"></i> Perfumes mais Rentáveis (Por Margem de Lucro)
+                </h3>
+                <div id="top-products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Dynamic rendering of high profit products -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: PRICING SIMULATOR AND CREATOR -->
+        <div id="tab-content-calculator" class="tab-content space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Inputs fields for calculator -->
+                <div class="lg:col-span-7 glass-panel rounded-2xl p-6">
+                    <div class="mb-6 border-b border-gold-500/10 pb-3">
+                        <h2 class="font-cinzel text-xl font-bold text-gold-400 mb-1">Precificar & Cadastrar Perfume</h2>
+                        <p class="text-xs text-luxury-textMuted">Preencha com as características da grife e os juros correspondentes de cada canal.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        
+                        <!-- Olfactive & Identity Fields -->
+                        <div class="sm:col-span-2">
+                            <h3 class="text-xs font-cinzel font-bold text-gold-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                                <i class="ph ph-identification-card text-sm"></i> Identidade Olfativa
+                            </h3>
+                        </div>
+
+                        <!-- Brand/Grife Selection -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Grife / Marca</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gold-500/50">
+                                    <i class="ph ph-buildings text-lg"></i>
+                                </span>
+                                <input type="text" id="marca" placeholder="Ex: Creed, Dior, Tom Ford" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300" oninput="simularPrecificacao()">
+                            </div>
+                        </div>
+
+                        <!-- Fragrance Name -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Nome do Perfume</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gold-500/50">
+                                    <i class="ph ph-spray-bottle text-lg"></i>
+                                </span>
+                                <input type="text" id="nome" placeholder="Ex: Aventus, Sauvage, Lost Cherry" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300" oninput="simularPrecificacao()">
+                            </div>
+                        </div>
+
+                        <!-- Concentration Selection -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Concentração Olfativa</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gold-500/50">
+                                    <i class="ph ph-drop text-lg"></i>
+                                </span>
+                                <select id="concentracao" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white outline-none transition-all duration-300 appearance-none" onchange="simularPrecificacao()">
+                                    <option value="Eau de Parfum (EdP)" selected>Eau de Parfum (EdP)</option>
+                                    <option value="Eau de Toilette (EdT)">Eau de Toilette (EdT)</option>
+                                    <option value="Parfum / Extrait">Parfum / Extrait de Parfum</option>
+                                    <option value="Eau de Cologne (EdC)">Eau de Cologne (EdC)</option>
+                                    <option value="Deo Colônia">Deo Colônia</option>
+                                </select>
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-luxury-textMuted">
+                                    <i class="ph ph-caret-down"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Volumetry (ml) -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Volumetria</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gold-500/50">
+                                    <i class="ph ph-brand-google-play text-lg">ml</i>
+                                </span>
+                                <select id="volumetria" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white outline-none transition-all duration-300 appearance-none" onchange="simularPrecificacao()">
+                                    <option value="100ml" selected>100 ml</option>
+                                    <option value="50ml">50 ml</option>
+                                    <option value="30ml">30 ml</option>
+                                    <option value="75ml">75 ml</option>
+                                    <option value="125ml">125 ml</option>
+                                    <option value="150ml">150 ml</option>
+                                    <option value="200ml">200 ml</option>
+                                </select>
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-luxury-textMuted">
+                                    <i class="ph ph-caret-down"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Fragrance Gender -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Gênero Alvo</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gold-500/50">
+                                    <i class="ph ph-gender-intersex text-lg"></i>
+                                </span>
+                                <select id="genero" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white outline-none transition-all duration-300 appearance-none" onchange="simularPrecificacao()">
+                                    <option value="Masculino" selected>Masculino</option>
+                                    <option value="Feminino">Feminino</option>
+                                    <option value="Compartilhável">Compartilhável (Unissex)</option>
+                                </select>
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-luxury-textMuted">
+                                    <i class="ph ph-caret-down"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Batch Code / Serial Code -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Batch Code (Código de Lote)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gold-500/50">
+                                    <i class="ph ph-barcode text-lg"></i>
+                                </span>
+                                <input type="text" id="batchCode" placeholder="Ex: AX521, L4221" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300" oninput="simularPrecificacao()">
+                            </div>
+                        </div>
+
+                        <!-- Platform / Sales Channel Selection -->
+                        <div class="sm:col-span-2 pt-4 border-t border-white/5">
+                            <h3 class="text-xs font-cinzel font-bold text-gold-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                                <i class="ph ph-storefront text-sm"></i> Canal de Venda & Marketplace (Taxas 2026)
+                            </h3>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Selecionar Canal / Marketplace</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gold-500/50">
+                                    <i class="ph ph-shopping-bag text-lg"></i>
+                                </span>
+                                <select id="canal-venda" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white outline-none transition-all duration-300 appearance-none" onchange="selecionarCanalVenda()">
+                                    <option value="direta" selected>Venda Direta / Particular (Sem Comissões)</option>
+                                    <option value="ml-classico">Mercado Livre - Clássico (13.5% + Taxas Fixas de 2026)</option>
+                                    <option value="ml-premium">Mercado Livre - Premium (Sem Juros: 18.5% + Taxas Fixas de 2026)</option>
+                                    <option value="shopee">Shopee - CNPJ / CPF Profissional (Progressivo + Juros 2026)</option>
+                                    <option value="personalizado">Plataforma Personalizada (Definir Manuscrito)</option>
+                                </select>
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-luxury-textMuted">
+                                    <i class="ph ph-caret-down"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Custom commission and fixed fee (visible only if personalized is chosen) -->
+                        <div id="box-personalizado" class="sm:col-span-2 hidden grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Comissão Manual (%)</label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-luxury-textMuted">%</span>
+                                    <input type="number" id="comissao" placeholder="Ex: 10" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 px-4 text-sm text-white outline-none" oninput="simularPrecificacao()">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Taxa Fixa Manual (R$)</label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-luxury-textMuted">R$</span>
+                                    <input type="number" id="taxa-fixa-custom" placeholder="Ex: 5,00" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white outline-none" oninput="simularPrecificacao()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing & Finances division header -->
+                        <div class="sm:col-span-2 pt-4 border-t border-white/5">
+                            <h3 class="text-xs font-cinzel font-bold text-gold-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                                <i class="ph ph-currency-dollar-simple text-sm"></i> Custos de Aquisição & Margem
+                            </h3>
+                        </div>
+
+                        <!-- Product Cost -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Custo do Frasco (R$)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-luxury-textMuted">R$</span>
+                                <input type="number" id="custo" step="0.01" min="0" placeholder="0,00" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300" oninput="simularPrecificacao()">
+                            </div>
+                        </div>
+
+                        <!-- Quantity in Stock -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Quantidade em Estoque</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-luxury-textMuted">
+                                    <i class="ph ph-stack"></i>
+                                </span>
+                                <input type="number" id="quantidade" min="0" placeholder="Ex: 5" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300" oninput="simularPrecificacao()">
+                            </div>
+                        </div>
+
+                        <!-- Shipping / Customs Cost -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Frete / Logística (R$)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-luxury-textMuted">R$</span>
+                                <input type="number" id="frete" step="0.01" min="0" placeholder="0,00" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300" oninput="simularPrecificacao()">
+                            </div>
+                        </div>
+
+                        <!-- Taxes Cost -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Impostos Adicionais (R$)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-luxury-textMuted">R$</span>
+                                <input type="number" id="imposto" step="0.01" min="0" placeholder="0,00" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300" oninput="simularPrecificacao()">
+                            </div>
+                        </div>
+
+                        <!-- Luxury Package Cost -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Embalagem de Luxo (R$)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-luxury-textMuted">R$</span>
+                                <input type="number" id="embalagem" step="0.01" min="0" placeholder="0,00" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300" oninput="simularPrecificacao()">
+                            </div>
+                        </div>
+
+                        <!-- Target Profit Margin -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Margem Líquida Alvo (%)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-luxury-textMuted">%</span>
+                                <input type="number" id="margem" placeholder="Ex: 35" class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-3 px-4 text-sm text-white placeholder-gray-600 outline-none transition-all duration-300" oninput="simularPrecificacao()">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Marketplace Rules Info Box -->
+                    <div id="marketplace-info-box" class="mt-4 p-4 rounded-xl bg-gold-950/20 border border-gold-500/20 text-xs text-gold-200">
+                        <!-- Instantiated via Javascript -->
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <button onclick="adicionarProduto()" class="flex-grow bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-black text-xs font-bold uppercase tracking-wider py-4 px-6 rounded-xl transition-all duration-300 shadow-gold-glow hover:shadow-gold-glow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <i class="ph ph-check-square text-lg"></i> Salvar no Estoque Ativo
+                        </button>
+                        <button onclick="limparCampos()" class="px-6 py-4 rounded-xl bg-transparent border border-white/10 hover:border-red-500/40 hover:bg-red-500/5 text-gray-400 hover:text-red-400 text-xs font-bold uppercase tracking-wider transition-all duration-300">
+                            Limpar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Price Tag Preview Simulator -->
+                <div class="lg:col-span-5 flex flex-col justify-start space-y-6">
+                    <div class="bg-luxury-card border-2 border-dashed border-gold-500/20 rounded-2xl p-6 relative overflow-hidden flex flex-col">
+                        
+                        <!-- Vintage Luxury Fragrance Tag Aesthetic -->
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-gold-500/5 rounded-full blur-2xl"></div>
+                        <div class="flex items-center justify-between border-b border-gold-500/20 pb-4 mb-4">
+                            <span class="font-cinzel text-xs uppercase tracking-widest text-gold-400">Etiqueta Simulada de Venda</span>
+                            <i class="ph ph-tag text-gold-500 text-lg"></i>
+                        </div>
+
+                        <!-- Brand Header in Preview -->
+                        <div class="text-center py-6 border-b border-white/5 space-y-1">
+                            <p id="preview-brand" class="font-cinzel text-[11px] tracking-[0.4em] text-gold-500 uppercase font-bold">MARCA DE LUXO</p>
+                            <p id="preview-name" class="font-cinzel text-xl font-bold tracking-widest uppercase text-white truncate px-4">Nome da Fragrância</p>
+                            
+                            <!-- Badges under preview name -->
+                            <div class="flex justify-center items-center gap-1.5 mt-2 text-[9px] text-luxury-textMuted uppercase tracking-wider">
+                                <span id="preview-conc" class="px-1.5 py-0.5 bg-white/5 rounded">Eau de Parfum</span>
+                                <span class="text-gold-500 font-semibold">•</span>
+                                <span id="preview-vol">100ml</span>
+                                <span class="text-gold-500 font-semibold">•</span>
+                                <span id="preview-gen">Masculino</span>
+                            </div>
+                            
+                            <p id="preview-price" class="font-cinzel text-4xl font-extrabold text-gold-400 tracking-wider pt-4">R$ 0,00</p>
+                            <p class="text-[9px] tracking-[0.2em] uppercase text-luxury-textMuted mt-1">Preço Sugerido de Anúncio</p>
+                        </div>
+
+                        <!-- Real-time Detailed Math Breakdown -->
+                        <div class="space-y-3 py-4 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-luxury-textMuted flex items-center gap-1"><i class="ph ph-cube"></i> Custo de Aquisição:</span>
+                                <span id="preview-base-cost" class="font-semibold text-white">R$ 0,00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-luxury-textMuted flex items-center gap-1"><i class="ph ph-truck"></i> Logística & Embalagem:</span>
+                                <span id="preview-overhead" class="font-semibold text-white">R$ 0,00</span>
+                            </div>
+                            <div class="flex justify-between border-t border-white/5 pt-2">
+                                <span class="text-luxury-textMuted flex items-center gap-1 font-medium text-gold-500/80"><i class="ph ph-calculator"></i> Custo Físico Consolidado:</span>
+                                <span id="preview-real-cost" class="font-bold text-white">R$ 0,00</span>
+                            </div>
+                            <div class="flex justify-between text-amber-400">
+                                <span class="flex items-center gap-1"><i class="ph ph-percent"></i> Taxa/Comissão Canal:</span>
+                                <span id="preview-commission-val" class="font-semibold font-mono">0.00%</span>
+                            </div>
+                            <div class="flex justify-between text-amber-500">
+                                <span class="flex items-center gap-1"><i class="ph ph-hash"></i> Tarifa Fixa Canal:</span>
+                                <span id="preview-fixed-val" class="font-semibold font-mono">R$ 0,00</span>
+                            </div>
+                            <div class="flex justify-between border-t border-gold-500/20 pt-2 bg-emerald-500/5 p-2 rounded-lg">
+                                <span class="text-emerald-400 flex items-center gap-1 font-bold"><i class="ph ph-trend-up"></i> Lucro Líquido Unitário:</span>
+                                <span id="preview-profit" class="font-bold text-emerald-400">R$ 0,00</span>
+                            </div>
+                        </div>
+
+                        <!-- Lote & Margem Row -->
+                        <div class="mt-2 flex justify-between items-center text-[10px] bg-gold-950/20 border border-gold-500/10 p-2.5 rounded-xl">
+                            <span class="text-gold-400 uppercase font-semibold">
+                                Margem Líquida: <span id="preview-margin-percent" class="font-bold font-mono">0%</span>
+                            </span>
+                            <span id="preview-batch" class="text-luxury-textMuted font-mono uppercase">LOTE: -</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB 3: INVENTORY MANAGEMENT TABLE -->
+        <div id="tab-content-inventory" class="tab-content space-y-6">
+            <div class="glass-panel rounded-2xl p-6">
+                
+                <!-- Table Controls / Filters -->
+                <div class="flex flex-col md:flex-row gap-4 justify-between items-center mb-6">
+                    <div>
+                        <h2 class="font-cinzel text-xl font-bold text-gold-400 mb-1">Estoque Premium</h2>
+                        <p class="text-xs text-luxury-textMuted">Controle quantidades físicas, edite especificações e analise lucros.</p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+                        <!-- Search Box -->
+                        <div class="relative w-full sm:w-60">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-luxury-textMuted">
+                                <i class="ph ph-magnifying-glass"></i>
+                            </span>
+                            <input type="text" id="search-bar" placeholder="Pesquisar perfume, grife, lote..." class="w-full bg-luxury-input border border-luxury-border focus:border-gold-500 rounded-xl py-2 pl-9 pr-4 text-xs text-white placeholder-gray-500 outline-none transition-all duration-300" oninput="renderizar()">
+                        </div>
+
+                        <!-- Status Filter -->
+                        <select id="filter-stock" class="bg-luxury-input border border-luxury-border text-gray-300 text-xs rounded-xl py-2 px-3 outline-none focus:border-gold-500" onchange="renderizar()">
+                            <option value="all">Todos os Status</option>
+                            <option value="in">Com Estoque</option>
+                            <option value="low">Estoque Crítico (≤ 2)</option>
+                            <option value="out">Esgotados</option>
+                        </select>
+
+                        <!-- Sorting System -->
+                        <select id="sort-order" class="bg-luxury-input border border-luxury-border text-gray-300 text-xs rounded-xl py-2 px-3 outline-none focus:border-gold-500" onchange="renderizar()">
+                            <option value="name">Nome (A-Z)</option>
+                            <option value="brand">Grife (A-Z)</option>
+                            <option value="profit-desc">Maior Lucro</option>
+                            <option value="qty-desc">Maior Estoque</option>
+                            <option value="qty-asc">Menor Estoque</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Database Table view -->
+                <div class="overflow-x-auto w-full rounded-xl border border-white/5">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-luxury-bg/90 border-b border-luxury-border/30 text-gold-400 text-xs font-cinzel tracking-wider">
+                                <th class="p-4 font-semibold">Produto / Características</th>
+                                <th class="p-4 font-semibold">Custo Real</th>
+                                <th class="p-4 font-semibold">Preço Anúncio</th>
+                                <th class="p-4 font-semibold text-center">Quantidade</th>
+                                <th class="p-4 font-semibold">Canal Aplicado</th>
+                                <th class="p-4 font-semibold">Lucro Liq. Unitário</th>
+                                <th class="p-4 font-semibold text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaProdutos" class="divide-y divide-white/5 text-xs text-gray-200">
+                            <!-- Dynamic rows via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty state screen inside table -->
+                <div id="table-empty-state" class="hidden text-center py-12 flex flex-col items-center">
+                    <div class="h-16 w-16 rounded-full border border-dashed border-gold-500/40 flex items-center justify-center bg-gold-950/10 mb-3 animate-pulse-gold">
+                        <i class="ph ph-spray-bottle text-2xl text-gold-500"></i>
+                    </div>
+                    <h4 class="font-cinzel text-sm font-bold text-gold-400 mb-1">Nenhum perfume no estoque</h4>
+                    <p class="text-xs text-luxury-textMuted max-w-sm">Adicione novos perfumes na aba "Precificar & Criar" ou use o botão de amostras de demonstração.</p>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER WITH SIGNATURE -->
+    <footer class="border-t border-luxury-border bg-luxury-bg py-6 text-center text-xs text-luxury-textMuted mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>Daniels Parfums Selection © 2026. Todos os direitos reservados.</p>
+            <p class="flex items-center gap-1.5">
+                <i class="ph ph-sparkle text-gold-500"></i> Otimizado para Mercado Livre & Shopee (Tarifas 2026).
+            </p>
+        </div>
+    </footer>
+
+    <!-- ================= MODALS & GLOBAL OVERLAYS ================= -->
+
+    <!-- TOAST NOTIFICATIONS (Replaces browser alert) -->
+    <div id="toast-container" class="fixed top-24 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-md w-full px-4">
+        <!-- Dynamic Toasts inject here -->
+    </div>
+
+    <!-- EDIT PRODUCT MODAL DIALOG -->
+    <div id="edit-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="glass-panel w-full max-w-lg rounded-2xl overflow-hidden shadow-gold-glow-lg border border-gold-500/30">
+            <div class="bg-luxury-card px-6 py-4 border-b border-gold-500/20 flex justify-between items-center">
+                <h3 class="font-cinzel text-base font-bold text-gold-400 flex items-center gap-2">
+                    <i class="ph ph-note-pencil"></i> Editar Especificações
+                </h3>
+                <button onclick="fecharModalEditar()" class="text-gray-400 hover:text-white transition-all"><i class="ph ph-x text-lg"></i></button>
+            </div>
+            
+            <div class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+                <input type="hidden" id="edit-index">
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Grife / Marca</label>
+                        <input type="text" id="edit-marca" class="w-full bg-luxury-input border border-luxury-border text-xs py-2.5 px-3 rounded-lg text-white outline-none focus:border-gold-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Nome do Perfume</label>
+                        <input type="text" id="edit-nome" class="w-full bg-luxury-input border border-luxury-border text-xs py-2.5 px-3 rounded-lg text-white outline-none focus:border-gold-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Concentração</label>
+                        <input type="text" id="edit-concentracao" class="w-full bg-luxury-input border border-luxury-border text-xs py-2.5 px-3 rounded-lg text-white outline-none focus:border-gold-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Volumetria</label>
+                        <input type="text" id="edit-volumetria" class="w-full bg-luxury-input border border-luxury-border text-xs py-2.5 px-3 rounded-lg text-white outline-none focus:border-gold-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Gênero</label>
+                        <input type="text" id="edit-genero" class="w-full bg-luxury-input border border-luxury-border text-xs py-2.5 px-3 rounded-lg text-white outline-none focus:border-gold-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Batch Code (Lote)</label>
+                        <input type="text" id="edit-batchCode" class="w-full bg-luxury-input border border-luxury-border text-xs py-2.5 px-3 rounded-lg text-white outline-none focus:border-gold-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Quantidade</label>
+                        <input type="number" id="edit-quantidade" class="w-full bg-luxury-input border border-luxury-border text-xs py-2.5 px-3 rounded-lg text-white outline-none focus:border-gold-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 border-t border-white/5 pt-3">
+                    <div>
+                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Custo Total (R$)</label>
+                        <input type="number" id="edit-custo" step="0.01" class="w-full bg-luxury-input border border-luxury-border text-xs py-2.5 px-3 rounded-lg text-white outline-none focus:border-gold-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Venda Final (R$)</label>
+                        <input type="number" id="edit-preco" step="0.01" class="w-full bg-luxury-input border border-luxury-border text-xs py-2.5 px-3 rounded-lg text-white outline-none focus:border-gold-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Lucro Liq. (R$)</label>
+                        <input type="number" id="edit-lucro" step="0.01" class="w-full bg-luxury-input border border-luxury-border text-xs py-2.5 px-3 rounded-lg text-white outline-none focus:border-gold-500">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-luxury-card px-6 py-4 border-t border-white/5 flex justify-end gap-2">
+                <button onclick="fecharModalEditar()" class="px-4 py-2 border border-white/10 text-gray-400 hover:text-white text-xs font-semibold rounded-lg transition-all">Cancelar</button>
+                <button onclick="salvarAlteracaoProduto()" class="bg-gradient-to-r from-gold-500 to-gold-600 text-black px-4 py-2 text-xs font-bold rounded-lg transition-all">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIRM DIALOG OVERLAY (Replaces window.confirm) -->
+    <div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="glass-panel w-full max-w-sm rounded-xl overflow-hidden border border-red-500/20">
+            <div class="p-6 text-center">
+                <div class="w-12 h-12 bg-red-500/10 text-red-400 border border-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="ph ph-warning text-2xl"></i>
+                </div>
+                <h3 id="confirm-title" class="font-cinzel text-base font-bold text-white mb-2">Tem certeza?</h3>
+                <p id="confirm-message" class="text-xs text-luxury-textMuted mb-6">Esta operação não pode ser desfeita no sistema.</p>
+                
+                <div class="flex gap-2">
+                    <button onclick="cancelarConfirmDialog()" class="flex-1 py-2.5 border border-white/10 hover:bg-white/5 text-gray-300 text-xs font-semibold rounded-lg transition-all">Cancelar</button>
+                    <button id="confirm-btn-action" class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition-all">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= APPLICATION SCRIPT ================= -->
+    <script>
+        // State Variables
+        let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+        let financeChartInstance = null;
+
+        // PRESETS / SAMPLE PREMIUM DATA FOR INITIAL LAUNCH
+        const amostrasLuxo = [
+            { 
+                marca: "Creed", 
+                nome: "Aventus Eau de Parfum", 
+                concentracao: "Eau de Parfum (EdP)", 
+                volumetria: "100ml", 
+                genero: "Masculino", 
+                batchCode: "C4221Y01", 
+                custoReal: 980.00, 
+                precoVenda: 1890.00, 
+                lucro: 721.00, 
+                quantidade: 3,
+                canalVenda: "direta"
+            },
+            { 
+                marca: "Chanel", 
+                nome: "Bleu de Chanel", 
+                concentracao: "Eau de Parfum (EdP)", 
+                volumetria: "100ml", 
+                genero: "Masculino", 
+                batchCode: "7201", 
+                custoReal: 410.00, 
+                precoVenda: 890.00, 
+                lucro: 391.00, 
+                quantidade: 8,
+                canalVenda: "direta"
+            },
+            { 
+                marca: "Tom Ford", 
+                nome: "Lost Cherry", 
+                concentracao: "Parfum / Extrait", 
+                volumetria: "50ml", 
+                genero: "Compartilhável", 
+                batchCode: "A30", 
+                custoReal: 1450.00, 
+                precoVenda: 2750.00, 
+                lucro: 1025.00, 
+                quantidade: 2,
+                canalVenda: "direta"
+            }
+        ];
+
+        // Dynamic helper to match channel descriptions
+        function obterLabelCanal(canal) {
+            switch(canal) {
+                case 'direta': return 'Venda Direta';
+                case 'ml-classico': return 'M.Livre Clássico';
+                case 'ml-premium': return 'M.Livre Premium';
+                case 'shopee': return 'Shopee (CNPJ/CPF)';
+                case 'personalizado': return 'Personalizado';
+                default: return 'Outro';
+            }
+        }
+
+        // Custom elegant Toast controller
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let bgClass, icon;
+            if (type === 'success') {
+                bgClass = 'bg-emerald-950/90 border-emerald-500/40 text-emerald-300';
+                icon = '<i class="ph ph-check-circle text-lg"></i>';
+            } else if (type === 'warning') {
+                bgClass = 'bg-amber-950/90 border-amber-500/40 text-amber-300';
+                icon = '<i class="ph ph-warning-circle text-lg"></i>';
+            } else {
+                bgClass = 'bg-red-950/90 border-red-500/40 text-red-300';
+                icon = '<i class="ph ph-x-circle text-lg"></i>';
+            }
+
+            toast.className = `p-4 rounded-xl border ${bgClass} shadow-lg backdrop-blur-md flex items-center justify-between gap-3 transform translate-x-12 opacity-0 transition-all duration-300 pointer-events-auto`;
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    ${icon}
+                    <span class="text-xs font-semibold">${message}</span>
+                </div>
+                <button class="text-xs opacity-50 hover:opacity-100"><i class="ph ph-x"></i></button>
+            `;
+
+            container.appendChild(toast);
+
+            // Animate In
+            setTimeout(() => {
+                toast.classList.remove('translate-x-12', 'opacity-0');
+            }, 10);
+
+            const removeToast = () => {
+                toast.classList.add('translate-x-12', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            };
+
+            toast.querySelector('button').onclick = removeToast;
+            setTimeout(removeToast, 4500);
+        }
+
+        // Custom premium Confirm Dialog
+        function showConfirmDialog(title, message, btnText, onConfirm) {
+            document.getElementById('confirm-title').innerText = title;
+            document.getElementById('confirm-message').innerText = message;
+            
+            const actionBtn = document.getElementById('confirm-btn-action');
+            actionBtn.innerText = btnText;
+            
+            actionBtn.onclick = () => {
+                onConfirm();
+                fecharConfirmDialog();
+            };
+
+            document.getElementById('confirm-modal').classList.remove('hidden');
+        }
+
+        function fecharConfirmDialog() {
+            document.getElementById('confirm-modal').classList.add('hidden');
+        }
+
+        function cancelarConfirmDialog() {
+            fecharConfirmDialog();
+            showToast("Operação cancelada", "info");
+        }
+
+        // LocalStorage sync
+        function salvar() {
+            localStorage.setItem("produtos", JSON.stringify(produtos));
+            renderizar();
+        }
+
+        // Tab Switcher
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 text-gray-400 hover:text-white";
+            });
+
+            const activeTabContent = document.getElementById(`tab-content-${tabId}`);
+            if (activeTabContent) activeTabContent.classList.add('active');
+
+            const activeTabBtn = document.getElementById(`tab-${tabId}`);
+            if (activeTabBtn) {
+                activeTabBtn.className = "tab-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 bg-gold-500 text-black shadow-gold-glow";
+            }
+        }
+
+        // Switch custom view inputs based on chosen channel
+        function selecionarCanalVenda() {
+            const canal = document.getElementById("canal-venda").value;
+            const boxPersonalizado = document.getElementById("box-personalizado");
+            
+            if (canal === "personalizado") {
+                boxPersonalizado.classList.remove("hidden");
+            } else {
+                boxPersonalizado.classList.add("hidden");
+            }
+            simularPrecificacao();
+        }
+
+        /**
+         * Mathematical reverse pricing solver to protect profit margins against progressive platform fees
+         */
+        function resolverMargemMarketplace(custoReal, margemDesejada, canal) {
+            let comissaoPercent = 0;
+            let taxaFixa = 0;
+            let precoSugerido = 0;
+
+            if (canal === 'direta') {
+                precoSugerido = custoReal / (1 - margemDesejada);
+                return { precoSugerido, comissaoPercent: 0, taxaFixa: 0 };
+            }
+
+            if (canal === 'ml-classico' || canal === 'ml-premium') {
+                // Mercado Livre 2026 rules (Beauty Category)
+                // Clássico: ~13.5% | Premium: ~18.5%
+                // Taxa fixa de R$ 6.75 para produtos abaixo de R$ 79.00
+                const pct = (canal === 'ml-classico') ? 0.135 : 0.185;
+                
+                // Test assumes the price is higher than R$ 79
+                let testePreco = custoReal / (1 - pct - margemDesejada);
+                
+                if (testePreco >= 79.0) {
+                    return { precoSugerido: testePreco, comissaoPercent: pct, taxaFixa: 0 };
+                } else {
+                    // Recalculates with the lower bracket fixed fee included
+                    let precoComTaxa = (custoReal + 6.75) / (1 - pct - margemDesejada);
+                    return { precoSugerido: precoComTaxa, comissaoPercent: pct, taxaFixa: 6.75 };
+                }
+            }
+
+            if (canal === 'shopee') {
+                // Shopee 2026 updated system progress rules:
+                // Faixa 1 (até R$7,99): 50%
+                // Faixa 2 (de R$8 a R$79,99): 20% comissão + R$4,00 taxa fixa
+                // Faixa 3 (de R$80 a R$99,99): 14% comissão + R$16,00 taxa fixa
+                // Faixa 4 (de R$100 a R$199,99): 14% comissão + R$20,00 taxa fixa
+                // Faixa 5 (acima de R$200): 14% comissão + R$26,00 taxa fixa
+                const brackets = [
+                    { max: 7.99, comissao: 0.50, taxaFixa: 0 },
+                    { max: 79.99, comissao: 0.20, taxaFixa: 4.00 },
+                    { max: 99.99, comissao: 0.14, taxaFixa: 16.00 },
+                    { max: 199.99, comissao: 0.14, taxaFixa: 20.00 },
+                    { max: Infinity, comissao: 0.14, taxaFixa: 26.00 }
+                ];
+
+                for (let i = 0; i < brackets.length; i++) {
+                    let b = brackets[i];
+                    let calc = (custoReal + b.taxaFixa) / (1 - b.comissao - margemDesejada);
+                    
+                    // Verify if this calculated price realistically falls in this bracket
+                    let min = (i === 0) ? 0 : brackets[i - 1].max + 0.01;
+                    if (calc >= min && calc <= b.max) {
+                        return { precoSugerido: calc, comissaoPercent: b.comissao, taxaFixa: b.taxaFixa };
+                    }
+                }
+                
+                // Fallback to highest bracket
+                let bMax = brackets[4];
+                let calcMax = (custoReal + bMax.taxaFixa) / (1 - bMax.comissao - margemDesejada);
+                return { precoSugerido: calcMax, comissaoPercent: bMax.comissao, taxaFixa: bMax.taxaFixa };
+            }
+
+            if (canal === 'personalizado') {
+                let cp = (Number(document.getElementById("comissao").value) / 100) || 0;
+                let tf = Number(document.getElementById("taxa-fixa-custom").value) || 0;
+                let p = (custoReal + tf) / (1 - cp - margemDesejada);
+                return { precoSugerido: p, comissaoPercent: cp, taxaFixa: tf };
+            }
+
+            return { precoSugerido: custoReal, comissaoPercent: 0, taxaFixa: 0 };
+        }
+
+        // Dynamic live pricing simulator update
+        function simularPrecificacao() {
+            const marca = document.getElementById("marca").value || "MARCA DE LUXO";
+            const nome = document.getElementById("nome").value || "Nome da Fragrância";
+            const concentracao = document.getElementById("concentracao").value;
+            const volumetria = document.getElementById("volumetria").value;
+            const genero = document.getElementById("genero").value;
+            const batchCode = document.getElementById("batchCode").value || "N/A";
+            const canal = document.getElementById("canal-venda").value;
+
+            const custo = Number(document.getElementById("custo").value) || 0;
+            const frete = Number(document.getElementById("frete").value) || 0;
+            const imposto = Number(document.getElementById("imposto").value) || 0;
+            const embalagem = Number(document.getElementById("embalagem").value) || 0;
+            const margemInput = Number(document.getElementById("margem").value) / 100 || 0;
+
+            const custoReal = custo + frete + imposto + embalagem;
+            const totalCustoOverhead = frete + imposto + embalagem;
+
+            // Solve through reverse pricing formulas
+            const resolucao = resolverMargemMarketplace(custoReal, margemInput, canal);
+            let precoVenda = resolucao.precoSugerido;
+            let comissaoFração = resolucao.comissaoPercent;
+            let taxaFixaCanal = resolucao.taxaFixa;
+
+            if (isNaN(precoVenda) || precoVenda < 0 || !isFinite(precoVenda)) {
+                precoVenda = 0;
+            }
+
+            // Calculations
+            const valorComissaoPercentual = precoVenda * comissaoFração;
+            const lucro = precoVenda - custoReal - valorComissaoPercentual - taxaFixaCanal;
+            const marginPercentOutput = Math.round(margemInput * 100);
+
+            // Update Preview Tag
+            document.getElementById("preview-brand").innerText = marca;
+            document.getElementById("preview-name").innerText = nome;
+            document.getElementById("preview-conc").innerText = concentracao;
+            document.getElementById("preview-vol").innerText = volumetria;
+            document.getElementById("preview-gen").innerText = genero;
+            document.getElementById("preview-batch").innerText = `LOTE: ${batchCode}`;
+
+            document.getElementById("preview-price").innerText = "R$ " + precoVenda.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById("preview-base-cost").innerText = "R$ " + custo.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById("preview-overhead").innerText = "R$ " + totalCustoOverhead.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById("preview-real-cost").innerText = "R$ " + custoReal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            
+            document.getElementById("preview-commission-val").innerText = (comissaoFração * 100).toFixed(2) + "% (R$ " + valorComissaoPercentual.toFixed(2) + ")";
+            document.getElementById("preview-fixed-val").innerText = "R$ " + taxaFixaCanal.toFixed(2);
+            document.getElementById("preview-profit").innerText = "R$ " + lucro.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById("preview-margin-percent").innerText = marginPercentOutput + "%";
+            
+            // Adjust visual class of profit tag
+            const previewProfitTag = document.getElementById("preview-profit");
+            if (lucro <= 0) {
+                previewProfitTag.className = "font-bold text-rose-400";
+            } else {
+                previewProfitTag.className = "font-bold text-emerald-400";
+            }
+
+            // Update the informative marketplace card rules
+            atualizarCardInfoRegra(canal, comissaoFração, taxaFixaCanal, precoVenda);
+        }
+
+        // Display exact details on how the chosen channel rules were applied
+        function atualizarCardInfoRegra(canal, comissao, taxaFixa, precoFinal) {
+            const infoBox = document.getElementById("marketplace-info-box");
+            let texto = "";
+
+            if (canal === 'direta') {
+                texto = `<span class="font-semibold text-emerald-400"><i class="ph ph-handshake"></i> Canal Particular / Venda Direta:</span> Livre de intermediários. 100% da margem líquida configurada retorna diretamente para o caixa de Daniels Parfums.`;
+            } else if (canal === 'ml-classico') {
+                texto = `<span class="font-semibold text-gold-400"><i class="ph ph-shopping-bag"></i> Mercado Livre Clássico 2026:</span> Comissão padrão de 13.5%. ${precoFinal < 79 ? "Como o produto custa menos de R$ 79,00, a taxa fixa unitária de <strong>R$ 6,75</strong> foi adicionada." : "Preço final ≥ R$ 79,00. Livre de tarifa fixa de venda, mas elegível para políticas de frete grátis."}`;
+            } else if (canal === 'ml-premium') {
+                texto = `<span class="font-semibold text-gold-400"><i class="ph ph-crown"></i> Mercado Livre Premium 2026:</span> Comissão de 18.5% (Oferece parcelamento sem juros). ${precoFinal < 79 ? "Adicionada taxa fixa de <strong>R$ 6,75</strong> por ticket abaixo de R$ 79,00." : "Livre de taxa fixa por ser ticket superior a R$ 79,00."}`;
+            } else if (canal === 'shopee') {
+                texto = `<span class="font-semibold text-orange-400"><i class="ph ph-storefront"></i> Shopee 2026 CNPJ/CPF:</span> Faixas progressivas ativas. `;
+                if (precoFinal < 8.0) {
+                    texto += "Faixa 1 (até R$7.99): Comissão unificada de 50% sem taxa de item.";
+                } else if (precoFinal < 80.0) {
+                    texto += "Faixa 2 (R$8 a R$79.99): Comissão de 20% + Taxa Fixa de <strong>R$ 4,00</strong> por item.";
+                } else if (precoFinal < 100.0) {
+                    texto += "Faixa 3 (R$80 a R$99.99): Comissão cai para 14%, mas a Taxa Fixa sobe para <strong>R$ 16,00</strong> por item.";
+                } else if (precoFinal < 200.0) {
+                    texto += "Faixa 4 (R$100 a R$199.99): Comissão de 14% + Taxa Fixa de <strong>R$ 20,00</strong> por item.";
+                } else {
+                    texto += "Faixa 5 (acima de R$200.00): Comissão de 14% + Taxa Fixa de <strong>R$ 26,00</strong> por item.";
+                }
+            } else if (canal === 'personalizado') {
+                texto = `<span class="font-semibold text-gray-300"><i class="ph ph-gear"></i> Configuração Personalizada:</span> Os valores percentuais e fixos inseridos manualmente foram calculados na simulação reversa.`;
+            }
+
+            infoBox.innerHTML = texto;
+        }
+
+        // Add Product To Database with precise features
+        function adicionarProduto() {
+            const marca = document.getElementById("marca").value.trim();
+            const nome = document.getElementById("nome").value.trim();
+            const concentracao = document.getElementById("concentracao").value;
+            const volumetria = document.getElementById("volumetria").value;
+            const genero = document.getElementById("genero").value;
+            const batchCode = document.getElementById("batchCode").value.trim() || "N/A";
+            const canalVenda = document.getElementById("canal-venda").value;
+
+            const custo = Number(document.getElementById("custo").value);
+            const frete = Number(document.getElementById("frete").value);
+            const imposto = Number(document.getElementById("imposto").value);
+            const embalagem = Number(document.getElementById("embalagem").value);
+            const margemInput = Number(document.getElementById("margem").value) / 100 || 0;
+
+            if (!marca) {
+                showToast("Por favor, preencha a grife ou marca do perfume.", "warning");
+                return;
+            }
+            if (!nome) {
+                showToast("Por favor, digite o nome do perfume.", "warning");
+                return;
+            }
+            if (custo <= 0) {
+                showToast("Custo do frasco precisa ser maior que zero.", "warning");
+                return;
+            }
+
+            const custoReal = custo + frete + imposto + embalagem;
+
+            // Solve pricing reversely to register exact performance
+            const resolucao = resolverMargemMarketplace(custoReal, margemInput, canalVenda);
+            let precoVenda = resolucao.precoSugerido;
+            let comissaoFração = resolucao.comissaoPercent;
+            let taxaFixaCanal = resolucao.taxaFixa;
+
+            if (isNaN(precoVenda) || precoVenda < 0 || !isFinite(precoVenda)) {
+                showToast("Erro no cálculo das margens. Ajuste os percentuais informados.", "error");
+                return;
+            }
+
+            const valorComissaoPercentual = precoVenda * comissaoFração;
+            const lucro = precoVenda - custoReal - valorComissaoPercentual - taxaFixaCanal;
+            const quantidade = Number(document.getElementById("quantidade").value) || 0;
+
+            produtos.push({
+                marca,
+                nome,
+                concentracao,
+                volumetria,
+                genero,
+                batchCode,
+                custoReal,
+                precoVenda,
+                lucro,
+                quantidade,
+                canalVenda
+            });
+
+            limparCampos();
+            salvar();
+            showToast(`"${nome}" cadastrado com sucesso e precificado para o canal selecionado!`);
+            switchTab("inventory");
+        }
+
+        // Inline inventory quantity manipulation
+        function alterarQtd(index, value) {
+            const novaQtd = produtos[index].quantidade + value;
+            if (novaQtd < 0) {
+                showToast("Estoque mínimo atingido (0 unidades).", "warning");
+                return;
+            }
+            produtos[index].quantidade = novaQtd;
+            salvar();
+            showToast("Quantidade do lote de importação atualizada.");
+        }
+
+        // Fast Sell Action
+        function vender(index) {
+            if (produtos[index].quantidade <= 0) {
+                showToast(`"${produtos[index].nome}" está esgotado no estoque!`, "error");
+                return;
+            }
+            produtos[index].quantidade--;
+            salvar();
+            showToast(`Vendido: 1 unidade de "${produtos[index].nome}"!`, "success");
+        }
+
+        // Delete perfume from database
+        function excluir(index) {
+            const perfume = produtos[index];
+            showConfirmDialog(
+                "Remover Perfume",
+                `Deseja realmente excluir "${perfume.nome}" (${perfume.marca}) do estoque de forma permanente?`,
+                "Excluir",
+                () => {
+                    produtos.splice(index, 1);
+                    salvar();
+                    showToast("Produto deletado com sucesso.", "warning");
+                }
+            );
+        }
+
+        // Edit perfume item values
+        function abrirModalEditar(index) {
+            const p = produtos[index];
+            document.getElementById("edit-index").value = index;
+            document.getElementById("edit-marca").value = p.marca || "";
+            document.getElementById("edit-nome").value = p.nome;
+            document.getElementById("edit-concentracao").value = p.concentracao || "Eau de Parfum (EdP)";
+            document.getElementById("edit-volumetria").value = p.volumetria || "100ml";
+            document.getElementById("edit-genero").value = p.genero || "Masculino";
+            document.getElementById("edit-batchCode").value = p.batchCode || "N/A";
+            document.getElementById("edit-quantidade").value = p.quantidade;
+
+            document.getElementById("edit-custo").value = p.custoReal.toFixed(2);
+            document.getElementById("edit-preco").value = p.precoVenda.toFixed(2);
+            document.getElementById("edit-lucro").value = p.lucro.toFixed(2);
+            
+            document.getElementById("edit-modal").classList.remove("hidden");
+        }
+
+        function fecharModalEditar() {
+            document.getElementById("edit-modal").classList.add("hidden");
+        }
+
+        function salvarAlteracaoProduto() {
+            const index = Number(document.getElementById("edit-index").value);
+            const pAnterior = produtos[index];
+
+            const marca = document.getElementById("edit-marca").value.trim();
+            const nome = document.getElementById("edit-nome").value.trim();
+            const concentracao = document.getElementById("edit-concentracao").value.trim();
+            const volumetria = document.getElementById("edit-volumetria").value.trim();
+            const genero = document.getElementById("edit-genero").value.trim();
+            const batchCode = document.getElementById("edit-batchCode").value.trim();
+            const quantidade = Number(document.getElementById("edit-quantidade").value);
+
+            const custoReal = Number(document.getElementById("edit-custo").value);
+            const precoVenda = Number(document.getElementById("edit-preco").value);
+            const lucro = Number(document.getElementById("edit-lucro").value);
+
+            if (!nome || !marca || custoReal < 0 || precoVenda < 0 || quantidade < 0) {
+                showToast("Dados de edição inválidos.", "error");
+                return;
+            }
+
+            produtos[index] = { 
+                marca, 
+                nome, 
+                concentracao, 
+                volumetria, 
+                genero, 
+                batchCode, 
+                custoReal, 
+                precoVenda, 
+                lucro, 
+                quantidade,
+                canalVenda: pAnterior.canalVenda || "direta"
+            };
+            
+            fecharModalEditar();
+            salvar();
+            showToast("Dados do lote de perfumaria salvos com sucesso!");
+        }
+
+        // Clear all fields on pricing
+        function limparCampos() {
+            document.getElementById("marca").value = "";
+            document.getElementById("nome").value = "";
+            document.getElementById("concentracao").value = "Eau de Parfum (EdP)";
+            document.getElementById("volumetria").value = "100ml";
+            document.getElementById("genero").value = "Masculino";
+            document.getElementById("batchCode").value = "";
+            document.getElementById("canal-venda").value = "direta";
+
+            document.getElementById("custo").value = "";
+            document.getElementById("frete").value = "";
+            document.getElementById("imposto").value = "";
+            document.getElementById("embalagem").value = "";
+            document.getElementById("margem").value = "";
+            document.getElementById("comissao").value = "";
+            document.getElementById("taxa-fixa-custom").value = "";
+            document.getElementById("quantidade").value = "";
+            
+            selecionarCanalVenda();
+        }
+
+        // Reset completely
+        function confirmarExclusaoGeral() {
+            showConfirmDialog(
+                "Resetar Banco de Dados",
+                "Tem certeza que deseja apagar absolutamente todos os produtos, lucros e estoques?",
+                "Zerar Tudo",
+                () => {
+                    produtos = [];
+                    salvar();
+                    showToast("Banco de dados do sistema redefinido.", "error");
+                }
+            );
+        }
+
+        // Data Backup Export
+        function exportarDados() {
+            if (produtos.length === 0) {
+                showToast("Não existem dados cadastrados para exportar.", "warning");
+                return;
+            }
+            const dados = JSON.stringify(produtos, null, 2);
+            const blob = new Blob([dados], { type: "application/json" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `daniels-parfums-backup-${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            showToast("Backup exportado com sucesso!");
+        }
+
+        // Data Backup Import
+        function importarDados(event) {
+            const arquivo = event.target.files[0];
+            if (!arquivo) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const dadosImportados = JSON.parse(e.target.result);
+                    if (Array.isArray(dadosImportados)) {
+                        produtos = dadosImportados;
+                        salvar();
+                        showToast("Dados importados do backup com sucesso!", "success");
+                    } else {
+                        showToast("O arquivo não possui uma estrutura compatível.", "error");
+                    }
+                } catch (err) {
+                    showToast("Erro de leitura ao tentar importar arquivo.", "error");
+                }
+            };
+            reader.readAsText(arquivo);
+            event.target.value = ""; 
+        }
+
+        // Load premium sample database
+        function carregarDadosAmostra() {
+            produtos = JSON.parse(JSON.stringify(amostrasLuxo));
+            salvar();
+            showToast("Estoque abastecido com amostras de alta perfumaria!", "success");
+        }
+
+        // Render system values, charts and lists
+        function renderizar() {
+            const tabela = document.getElementById("tabelaProdutos");
+            const emptyState = document.getElementById("table-empty-state");
+            const searchVal = document.getElementById("search-bar").value.toLowerCase();
+            const filterStock = document.getElementById("filter-stock").value;
+            const sortOrder = document.getElementById("sort-order").value;
+
+            tabela.innerHTML = "";
+
+            let faturamento = 0;
+            let lucroTotal = 0;
+            let estoqueTotal = 0;
+            let temEstoqueCritico = false;
+
+            produtos.forEach(p => {
+                faturamento += p.precoVenda * p.quantidade;
+                lucroTotal += p.lucro * p.quantidade;
+                estoqueTotal += p.quantidade;
+                if (p.quantidade <= 2 && p.quantidade > 0) {
+                    temEstoqueCritico = true;
+                }
+            });
+
+            // Demo UI controllers visibility toggler
+            if (produtos.length === 0) {
+                document.getElementById('demo-db-box').classList.remove('hidden');
+                document.getElementById('reset-db-box').classList.add('hidden');
+            } else {
+                document.getElementById('demo-db-box').classList.add('hidden');
+                document.getElementById('reset-db-box').classList.remove('hidden');
+            }
+
+            // High priority Low Stock system warning
+            const lowStockBanner = document.getElementById("low-stock-alert");
+            if (temEstoqueCritico && produtos.length > 0) {
+                lowStockBanner.classList.remove('hidden');
+                lowStockBanner.classList.add('flex');
+            } else {
+                lowStockBanner.classList.add('hidden');
+                lowStockBanner.classList.remove('flex');
+            }
+
+            let produtosFiltrados = [...produtos];
+
+            // 1. Apply Search query
+            if (searchVal) {
+                produtosFiltrados = produtosFiltrados.filter(p => 
+                    (p.nome && p.nome.toLowerCase().includes(searchVal)) ||
+                    (p.marca && p.marca.toLowerCase().includes(searchVal)) ||
+                    (p.batchCode && p.batchCode.toLowerCase().includes(searchVal)) ||
+                    (p.concentracao && p.concentracao.toLowerCase().includes(searchVal))
+                );
+            }
+
+            // 2. Apply Stock status filter
+            if (filterStock === "in") {
+                produtosFiltrados = produtosFiltrados.filter(p => p.quantidade > 0);
+            } else if (filterStock === "low") {
+                produtosFiltrados = produtosFiltrados.filter(p => p.quantidade <= 2 && p.quantidade > 0);
+            } else if (filterStock === "out") {
+                produtosFiltrados = produtosFiltrados.filter(p => p.quantidade === 0);
+            }
+
+            // 3. Apply Ordering System
+            if (sortOrder === "name") {
+                produtosFiltrados.sort((a, b) => (a.nome || "").localeCompare(b.nome || ""));
+            } else if (sortOrder === "brand") {
+                produtosFiltrados.sort((a, b) => (a.marca || "").localeCompare(b.marca || ""));
+            } else if (sortOrder === "profit-desc") {
+                produtosFiltrados.sort((a, b) => b.lucro - a.lucro);
+            } else if (sortOrder === "qty-desc") {
+                produtosFiltrados.sort((a, b) => b.quantidade - a.quantidade);
+            } else if (sortOrder === "qty-asc") {
+                produtosFiltrados.sort((a, b) => a.quantidade - b.quantidade);
+            }
+
+            // Render Rows
+            if (produtosFiltrados.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                
+                produtosFiltrados.forEach((p) => {
+                    const originalIndex = produtos.findIndex(item => item.nome === p.nome && item.marca === p.marca);
+
+                    let stockBadge = "";
+                    if (p.quantidade === 0) {
+                        stockBadge = `<span class="px-2 py-0.5 rounded bg-red-950/40 border border-red-500/20 text-red-400 font-semibold text-[9px] uppercase">Esgotado</span>`;
+                    } else if (p.quantidade <= 2) {
+                        stockBadge = `<span class="px-2 py-0.5 rounded bg-amber-950/40 border border-amber-500/20 text-amber-400 font-semibold text-[9px] uppercase">Estoque Crítico</span>`;
+                    } else {
+                        stockBadge = `<span class="px-2 py-0.5 rounded bg-emerald-950/40 border border-emerald-500/20 text-emerald-400 font-semibold text-[9px] uppercase">Regular</span>`;
+                    }
+
+                    const labelCanal = obterLabelCanal(p.canalVenda || 'direta');
+
+                    tabela.innerHTML += `
+                        <tr class="hover:bg-white/[0.02] transition-colors">
+                            <td class="p-4">
+                                <div class="flex flex-col">
+                                    <span class="text-[10px] uppercase font-bold tracking-widest text-gold-400 font-cinzel">${p.marca || 'MARCA INDEFINIDA'}</span>
+                                    <p class="font-cinzel font-semibold text-gray-100 text-sm truncate max-w-xs">${p.nome}</p>
+                                    
+                                    <div class="flex flex-wrap gap-1.5 mt-2">
+                                        <span class="text-[9px] px-1.5 py-0.5 bg-white/5 rounded text-gray-400 border border-white/5">${p.concentracao || 'EDP'}</span>
+                                        <span class="text-[9px] px-1.5 py-0.5 bg-white/5 rounded text-gold-400 border border-gold-500/10">${p.volumetria || '100ml'}</span>
+                                        <span class="text-[9px] px-1.5 py-0.5 bg-white/5 rounded text-gray-400 border border-white/5">${p.genero || 'Unissex'}</span>
+                                        ${p.batchCode ? `<span class="text-[9px] px-1.5 py-0.5 bg-gold-500/10 text-gold-300 rounded border border-gold-500/20 font-mono">LOTE: ${p.batchCode}</span>` : ''}
+                                        ${stockBadge}
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-gray-300 font-mono">R$ ${(p.custoReal || 0).toFixed(2)}</td>
+                            <td class="p-4 text-gold-400 font-mono font-semibold">R$ ${(p.precoVenda || 0).toFixed(2)}</td>
+                            
+                            <!-- Interactive quantity adjustment cells -->
+                            <td class="p-4 text-center">
+                                <div class="inline-flex items-center gap-2 border border-white/5 bg-luxury-input/70 px-2 py-1 rounded-xl">
+                                    <button onclick="alterarQtd(${originalIndex}, -1)" class="w-6 h-6 rounded-lg bg-white/5 hover:bg-gold-500 hover:text-black transition-all flex items-center justify-center font-bold text-gray-300"><i class="ph ph-minus"></i></button>
+                                    <span class="w-8 font-semibold text-white font-mono text-center">${p.quantidade}</span>
+                                    <button onclick="alterarQtd(${originalIndex}, 1)" class="w-6 h-6 rounded-lg bg-white/5 hover:bg-gold-500 hover:text-black transition-all flex items-center justify-center font-bold text-gray-300"><i class="ph ph-plus"></i></button>
+                                </div>
+                            </td>
+
+                            <td class="p-4">
+                                <span class="px-2 py-1 text-[10px] rounded bg-white/5 text-gray-300 font-semibold border border-white/5">${labelCanal}</span>
+                            </td>
+
+                            <td class="p-4 ${p.lucro > 0 ? 'text-emerald-400' : 'text-red-400'} font-mono font-bold">R$ ${(p.lucro || 0).toFixed(2)}</td>
+                            <td class="p-4">
+                                <div class="flex items-center justify-center gap-2">
+                                    <button onclick="vender(${originalIndex})" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-2.5 py-1.5 rounded-lg transition-all text-[11px] flex items-center gap-1">
+                                        <i class="ph ph-shopping-cart"></i> Vender
+                                    </button>
+                                    <button onclick="abrirModalEditar(${originalIndex})" class="bg-luxury-card border border-white/10 hover:border-gold-500/40 text-gray-300 px-2.5 py-1.5 rounded-lg transition-all text-[11px] flex items-center gap-1">
+                                        <i class="ph ph-pencil"></i>
+                                    </button>
+                                    <button onclick="excluir(${originalIndex})" class="bg-red-950/30 hover:bg-red-600 hover:text-white border border-red-500/20 text-red-400 px-2.5 py-1.5 rounded-lg transition-all text-[11px] flex items-center gap-1">
+                                        <i class="ph ph-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            renderTopProducts();
+
+            document.getElementById("fat").innerText = "R$ " + faturamento.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById("lucroTotal").innerText = "R$ " + lucroTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById("estoqueTotal").innerText = estoqueTotal;
+
+            atualizarGraficos();
+        }
+
+        // Render dynamic top products in dashboard
+        function renderTopProducts() {
+            const container = document.getElementById("top-products-grid");
+            container.innerHTML = "";
+
+            if (produtos.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-6 text-luxury-textMuted text-xs">
+                        Adicione perfumes com margens lucrativas para ver os destaques aqui.
+                    </div>
+                `;
+                return;
+            }
+
+            let highRentable = [...produtos].sort((a,b) => b.lucro - a.lucro).slice(0, 4);
+
+            highRentable.forEach(p => {
+                const profitMarginRatio = p.precoVenda > 0 ? ((p.lucro / p.precoVenda) * 100).toFixed(0) : 0;
+                container.innerHTML += `
+                    <div class="bg-luxury-card/50 border border-gold-500/10 rounded-xl p-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[9px] uppercase tracking-wider text-gold-500 font-semibold">${p.marca || 'Grife'} • Margem: ${profitMarginRatio}%</span>
+                            <h4 class="font-cinzel text-xs font-bold text-white truncate mt-1">${p.nome}</h4>
+                        </div>
+                        <div class="mt-4 pt-2 border-t border-white/5 flex justify-between items-baseline">
+                            <span class="text-[10px] text-luxury-textMuted">Retorno líq.</span>
+                            <span class="font-bold text-emerald-400 text-xs font-mono">R$ ${(p.lucro || 0).toFixed(2)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Render & sync Charts
+        function atualizarGraficos() {
+            const ctx = document.getElementById('financeChart');
+            const placeholder = document.getElementById('chart-placeholder');
+
+            if (produtos.length === 0) {
+                placeholder.classList.remove('hidden');
+                if (financeChartInstance) {
+                    financeChartInstance.destroy();
+                    financeChartInstance = null;
+                }
+                return;
+            }
+
+            placeholder.classList.add('hidden');
+
+            const labels = produtos.map(p => (p.nome || "").split(" ")[0] + "...");
+            const custos = produtos.map(p => p.custoReal);
+            const lucros = produtos.map(p => p.lucro);
+
+            if (financeChartInstance) {
+                financeChartInstance.data.labels = labels;
+                financeChartInstance.data.datasets[0].data = custos;
+                financeChartInstance.data.datasets[1].data = lucros;
+                financeChartInstance.update();
+            } else {
+                financeChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Custo Consolidado (R$)',
+                                data: custos,
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                borderColor: 'rgba(255, 255, 255, 0.3)',
+                                borderWidth: 1.5,
+                                borderRadius: 4,
+                            },
+                            {
+                                label: 'Lucro Líquido Unitário (R$)',
+                                data: lucros,
+                                backgroundColor: 'rgba(212, 175, 55, 0.65)',
+                                borderColor: '#D4AF37',
+                                borderWidth: 1.5,
+                                borderRadius: 4,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#9ca3af',
+                                    font: { size: 10, family: 'Montserrat' }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { color: 'rgba(255,255,255,0.03)' },
+                                ticks: { color: '#9ca3af', font: { size: 9 } }
+                            },
+                            y: {
+                                grid: { color: 'rgba(255,255,255,0.03)' },
+                                ticks: { color: '#9ca3af', font: { size: 9 } }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize App State on Load
+        window.onload = function() {
+            simularPrecificacao();
+            renderizar();
+            showToast("Plataforma Daniels Parfums ativa com taxas 2026.", "success");
+        };
+
+    </script>
+</body>
+</html>
